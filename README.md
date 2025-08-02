@@ -1,4 +1,4 @@
-https://youtu.be/uvNFNDCO7zQ?si=Ma_trLP0OKPLy0k2 -> working process of my project
+https://youtu.be/uvNFNDCO7zQ?si=Ma_trLP0OKPLy0k2 ->WORKING PROCESS OF MY PROJECT
 # HalleyX E-Commerce Portal - React Frontend
 
 This is the React frontend for the HalleyX E-Commerce Portal, converted from the original HTML/CSS/JavaScript implementation.
