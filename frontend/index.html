@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sowndhar's E-market</title>
+    <style>
+        /* Neon Glow Colors & fonts */
+        :root {
+            --primary: #00fff7; /* Neon Cyan */
+            --primary-glow: rgba(0, 255, 247, 0.8);
+            --secondary: #ff00d4; /* Neon Pink */
+            --secondary-glow: rgba(255, 0, 212, 0.8);
+            --background: #0d1117; /* Dark Background */
+            --text-main: #e6e6e6; /* Light Text */
+            --input-bg: #141c27; /* Input Background */
+            --input-border: #1b2736; /* Input Border */
+            --button-bg: #00fff7; /* Button Background */
+            --button-hover: rgba(0, 255, 247, 0.9); /* Button Hover Effect */
+            --table-header-bg: #1b2736; /* Table Header Background */
+            --table-row-bg1: #141c27; /* Table Row Background 1 */
+            --table-row-bg2: #1b2736; /* Table Row Background 2 */
+        }
+
+
+
+        
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background);
+            color: var(--text-main);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem;
+            user-select: none;
+        }
+        h1, h2, h3 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            text-shadow: 0 0 10px var(--primary-glow);
+        }
+        h1 {
+            font-size: 2rem;
+            margin-top: 0;
+        }
+        h2 {
+            font-size: 1.3rem;
+            margin-top: 2rem;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.3rem;
+            text-shadow: 0 0 10px var(--primary-glow);
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background: #141c27;
+            border-radius: 16px;
+            padding: 1rem 2rem 2rem;
+            box-shadow:
+                0 0 10px var(--primary-glow),
+                0 0 30px var(--primary-glow);
+        }
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 3px solid var(--primary);
+            margin-bottom: 1rem;
+            user-select: none;
+        }
+        .tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            color: var(--primary);
+            font-weight: 700;
+            border-bottom: 3px solid transparent;
+            transition: border-color 0.3s ease, color 0.3s ease;
+            text-shadow: 0 0 6px var(--primary-glow);
+        }
+        .tab.active {
+            border-color: var(--secondary);
+            color: var(--secondary);
+            text-shadow:
+                0 0 8px var(--secondary-glow),
+                0 0 15px var(--secondary-glow);
+        }
+        /* Forms */
+        form {
+            max-width: 400px;
+            background: var(--input-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow:
+                0 0 15px var(--primary-glow);
+            margin-bottom: 2rem;
+            color: var(--text-main);
+        }
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            text-shadow: 0 0 6px var(--primary-glow);
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="number"],
+        input[type="url"], /* Added for image URL */
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid var(--input-border);
+            border-radius: 10px;
+            background: #111a23;
+            color: var(--text-main);
+            margin-bottom: 1.2rem;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            resize: vertical;
+            text-shadow: none;
+        }
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="number"]:focus,
+        input[type="url"]:focus, /* Added for image URL */
+        select:focus,
+        textarea:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow:
+                0 0 8px var(--secondary-glow),
+                inset 0 0 5px var(--secondary-glow);
+            background: #1b2736;
+            color: var(--text-main);
+        }
+        button {
+            background: var(--button-bg);
+            color: white;
+            font-weight: 700;
+            padding: 0.9rem 2.5rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 10px var(--primary-glow);
+            text-shadow:
+                0 0 5px #000;
+            user-select: none;
+        }
+        button:hover {
+            background: var(--button-hover);
+            box-shadow:
+                0 0 20px var(--secondary-glow),
+                0 0 30px var(--secondary-glow);
+        }
+        /* Layout */
+        .flex-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .flex-grow {
+            flex-grow: 1;
+        }
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 12px;
+            margin-bottom: 2rem;
+            table-layout: fixed;
+            word-wrap: break-word;
+            color: var(--text-main);
+            text-shadow: none;
+        }
+        th, td {
+            padding: 1rem 1.4rem;
+            background: var(--table-row-bg1);
+            border-radius: 10px;
+            text-align: left;
+            box-shadow:
+                0 0 8px var(--primary-glow);
+            vertical-align: middle;
+            color: var(--text-main);
+        }
+        th {
+            background: var(--table-header-bg);
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            user-select: none;
+            text-shadow:
+                0 0 12px var(--primary-glow);
+        }
+        tbody tr:nth-child(even) td {
+            background: var(--table-row-bg2);
+            box-shadow:
+                0 0 8px var(--secondary-glow);
+        }
+        tbody tr:hover td {
+            background: #1b2736;
+            box-shadow:
+                0 0 20px var(--secondary-glow);
+            color: var(--primary);
+        }
+        /* Action buttons */
+        .actions button {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 0.3rem 0.9rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            transition: all 0.3s ease;
+            text-shadow:
+                0 0 8px var(--primary-glow);
+            box-shadow: none;
+            user-select: none;
+        }
+        .actions button:hover {
+            background: var(--secondary);
+            color: white;
+            box-shadow:
+                0 0 15px var(--secondary-glow);
+            text-shadow:
+                0 0 15px #fff;
+        }
+        /* Search and filters */
+        .search-bar,
+        .filter-bar {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .search-bar input,
+        .filter-bar select {
+            flex-grow: 1;
+            max-width: 250px;
+            background: var(--input-bg);
+            border: 2px solid var(--input-border);
+            border-radius: 12px;
+            padding: 0.6rem 1rem;
+            color: var(--text-main);
+            font-weight: 600;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            text-shadow: none;
+        }
+        .search-bar input:focus,
+        .filter-bar select:focus {
+            border-color: var(--secondary);
+            box-shadow:
+                0 0 8px var(--secondary-glow),
+                inset 0 0 5px var(--secondary-glow);
+            outline: none;
+            background: #1b2736;
+            color: var(--text-main);
+        }
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+        .pagination button {
+            background: var(--input-bg);
+            color: var(--text-main);
+            border: 2px solid var(--primary);
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease, color 0.3s ease;
+            text-shadow: none;
+            user-select: none;
+        }
+        .pagination button.active,
+        .pagination button:hover {
+            background: var(--secondary);
+            color: white;
+            box-shadow:
+                0 0 20px var(--secondary-glow),
+                0 0 30px var(--secondary-glow);
+            text-shadow:
+                0 0 10px #fff;
+        }
+        /* Modals (simple inline) */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right:0; bottom:0;
+            background: rgba(0,0,0,0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            user-select: none;
+        }
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal {
+            background: var(--input-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            width: 400px;
+            max-width: 90vw;
+            box-shadow:
+                0 0 20px var(--secondary-glow);
+            position: relative;
+            color: var(--text-main);
+            user-select: text;
+        }
+        .modal h3 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary-glow);
+        }
+        .modal .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+            font-weight: 700;
+            text-shadow: 0 0 12px var(--primary-glow);
+            user-select: none;
+        }
+        /* Impersonation banner */
+        .impersonation-banner {
+            background: var(--secondary);
+            color: white;
+            text-align: center;
+            padding: 0.6rem 0;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-radius: 0 0 12px 12px;
+            margin-bottom: 1rem;
+            user-select: none;
+            text-shadow:
+                0 0 10px rgba(255, 0, 212, 0.8);
+        }
+        /* Product Image Style in Table */
+        .product-image-thumbnail {
+            width: 60px; /* Slightly larger for better visibility */
+            height: 60px;
+            object-fit: contain; /* Use 'contain' to ensure full image is visible */
+            border-radius: 5px;
+            margin-right: 10px;
+            vertical-align: middle;
+            border: 1px solid var(--primary-glow); /* Small border for visual separation */
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .flex-row {
+                flex-direction: column;
+            }
+            .search-bar input,
+            .filter-bar select {
+                max-width: 100%;
+            }
+            table, th, td {
+                font-size: 0.9rem;
+            }
+            form {
+                max-width: 100%;
+            }
+        }
+
+        /* Professional Interface Enhancements */
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .auth-buttons button {
+            flex: 1;
+            padding: 1rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .auth-buttons button.active-auth {
+            background: var(--button-bg);
+            color: white;
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .auth-buttons button:not(.active-auth) {
+            background: var(--input-bg);
+            border: 2px solid var(--button-bg);
+            color: var(--primary);
+            box-shadow: none;
+        }
+
+        .auth-buttons button:not(.active-auth):hover {
+            background: rgba(0, 255, 247, 0.1);
+            color: var(--primary);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .form-section {
+            display: none; /* Hidden by default */
+        }
+        .form-section.active-form {
+            display: block; /* Shown when active */
+        }
+    </style>
+    <link rel="stylesheet" href="/css/styles.css?v=1.0.1">
+    <script src="/js/main.js?v=1.0.1"></script>
+</head>
+<body>
+    <div class="container">
+
+        <h1 style="color: var(--primary); margin-bottom: 1rem; text-align: center;">Sowndhar's E-market</h1>
+
+        <div id="impersonationBanner" class="impersonation-banner" style="display:none;">
+            You are impersonating customer: <span id="impersonatedName"></span>
+            <button style="margin-left:1rem;padding:0.2rem 0.5rem;border-radius:6px; border:none; cursor:pointer; font-weight:700;" onclick="stopImpersonation()">Exit Impersonation</button>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" data-tab="customerPortal">Customer Portal</div>
+            <div class="tab" data-tab="adminPortal">Admin Portal</div>
+        </div>
+
+        <section id="customerPortal">
+
+            <h1>Customer Portal</h1>
+
+            <div class="auth-buttons">
+                <button id="showLoginBtn" class="active-auth">Login</button>
+                <button id="showRegisterBtn">Register</button>
+            </div>
+
+            <div id="customerAuthForms">
+
+                <form id="customerLoginForm" class="form-section active-form">
+                    <h2>Login to Your Account</h2>
+                    <label for="custLoginEmail">Email</label>
+                    <input type="email" id="custLoginEmail" required placeholder="you@example.com" />
+                    <label for="custLoginPassword">Password</label>
+                    <input type="password" id="custLoginPassword" required placeholder="Your password" />
+                    <button type="submit">Secure Login</button>
+                </form>
+
+                <form id="customerRegisterForm" class="form-section">
+                    <h2>Create a New Account</h2>
+                    <label for="custRegFirstName">First Name</label>
+                    <input type="text" id="custRegFirstName" required placeholder="First Name" />
+                    <label for="custRegLastName">Last Name</label>
+                    <input type="text" id="custRegLastName" required placeholder="Last Name" />
+                    <label for="custRegEmail">Email</label>
+                    <input type="email" id="custRegEmail" required placeholder="you@example.com" />
+                    <label for="custRegPassword">Password</label>
+                    <input type="password" id="custRegPassword" required placeholder="Choose a strong password" />
+                    <button type="submit">Sign Up Now</button>
+                </form>
+
+            </div>
+
+            <section id="customerDashboard" style="display:none;">
+
+                <h2>Welcome, <span id="custWelcomeName"></span>!</h2>
+
+                <button onclick="logoutCustomer()" style="margin-bottom: 1rem;">Logout</button>
+
+                <h3>Browse Our Products</h3>
+                <div class="search-bar">
+                    <input type="text" id="custProductSearch" placeholder="Search products..." />
+                    <select id="custProductSort">
+                        <option value="name-asc">Sort by Name ↑</option>
+                        <option value="name-desc">Sort by Name ↓</option>
+                        <option value="price-asc">Sort by Price ↑</option>
+                        <option value="price-desc">Sort by Price ↓</option>
+                        <option value="stock-asc">Sort by Stock ↑</option>
+                        <option value="stock-desc">Sort by Stock ↓</option>
+                    </select>
+                </div>
+                <table id="custProductsTable">
+                    <thead>
+                        <tr><th>Image</th><th>Name</th><th>Description</th><th>Price</th><th>Stock</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <h3 style="margin-top: 3rem;">My Shopping Cart</h3>
+                <table id="customerCartTable">
+                    <thead>
+                        <tr><th>Image</th><th>Product</th><th>Quantity</th><th>Price</th><th>Subtotal</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <p style="text-align: right; margin-top: 1rem;">Cart Total: <strong id="cartTotalAmount">$0.00</strong></p>
+                <button id="proceedToCheckoutBtn" style="display:none;">Proceed to Checkout</button>
+
+
+                <h3 style="margin-top: 3rem;">Your Recent Orders</h3>
+                <table id="custOrdersTable">
+                    <thead>
+                        <tr><th>Order ID</th><th>Product</th><th>Quantity</th><th>Status</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <h3>Your Profile Details</h3>
+                <form id="custProfileForm">
+                    <label for="profileFirstName">First Name</label>
+                    <input type="text" id="profileFirstName" required />
+                    <label for="profileLastName">Last Name</label>
+                    <input type="text" id="profileLastName" required />
+                    <label for="profileEmail">Email</label>
+                    <input type="email" id="profileEmail" disabled />
+                    <button type="submit">Save Profile Changes</button>
+                </form>
+
+            </section>
+
+            <section id="checkoutSection" style="display:none;">
+                <h2>Finalize Your Order</h2>
+                <p>Please review your order and provide shipping details.</p>
+                <div id="checkoutSummary">
+                    </div>
+                <p>Order Total: <strong id="checkoutTotalAmount"></strong></p>
+                <form id="checkoutForm">
+                    <div id="shippingAddressField">
+                        <label for="shippingAddress">Shipping Address</label>
+                        <textarea id="shippingAddress" required></textarea>
+                    </div>
+                    <label for="billingAddress">Billing Address</label>
+                    <textarea id="billingAddress" required></textarea>
+                    <button type="submit">Place Order Securely</button>
+                    <button type="button" onclick="cancelCheckout()" style="background: var(--input-bg); border: 2px solid var(--secondary); color: var(--secondary); margin-left: 1rem;">Cancel Checkout</button>
+                </form>
+            </section>
+
+        </section>
+
+        <section id="adminPortal" style="display:none;">
+            <h1>Admin Portal</h1>
+
+            <div id="adminAuthForms">
+                <form id="adminLoginForm">
+                    <h2>Admin Login</h2>
+                    <label for="adminLoginEmail">Email</label>
+                    <input type="email" id="adminLoginEmail" required placeholder="admin@example.com" />
+                    <label for="adminLoginPassword">Password</label>
+                    <input type="password" id="adminLoginPassword" required placeholder="admin123" />
+                    <button type="submit">Login as Admin</button>
+                </form>
+            </div>
+
+            <section id="adminDashboard" style="display:none;">
+                <h2>Admin Dashboard Overview</h2>
+                <button onclick="logoutAdmin()" style="margin-bottom: 1rem;">Logout Admin</button>
+
+                <div id="adminStats" style="background:var(--input-bg); padding:1rem; border-radius:12px; margin-bottom:2rem; box-shadow: 0 0 10px var(--primary-glow);">
+                    <h3>Portal Statistics</h3>
+                    </div>
+
+                <h3>Manage Products</h3>
+                <button onclick="showAddProductModal()" style="margin-bottom: 1rem;">Add New Product</button>
+                <div class="search-bar">
+                    <input type="text" id="adminProductSearch" placeholder="Search products..." />
+                    <select id="adminProductSort">
+                        <option value="name-asc">Sort by Name ↑</option>
+                        <option value="name-desc">Sort by Name ↓</option>
+                        <option value="price-asc">Sort by Price ↑</option>
+                        <option value="price-desc">Sort by Price ↓</option>
+                        <option value="stock-asc">Sort by Stock ↑</option>
+                        <option value="stock-desc">Sort by Stock ↓</option>
+                    </select>
+                </div>
+                <table id="adminProductsTable">
+                    <thead>
+                        <tr><th>Image</th><th>Name</th><th>Price</th><th>Stock</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <h3>Manage Customers</h3>
+                <button onclick="showAddCustomerModal()" style="margin-bottom: 1rem;">Add New Customer</button>
+                <div class="filter-bar">
+                    <input type="text" id="adminCustomerSearch" placeholder="Search customers..." />
+                    <select id="adminCustomerStatusFilter">
+                        <option value="all">All Statuses</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+                <table id="adminCustomersTable">
+                    <thead>
+                        <tr><th>Name</th><th>Email</th><th>Status</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <h3>Manage Orders</h3>
+                <div class="filter-bar">
+                    <select id="adminOrderStatusFilter">
+                        <option value="all">All Statuses</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Shipped">Shipped</option>
+                        <option value="Delivered">Delivered</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <table id="adminOrdersTable">
+                    <thead>
+                        <tr><th>Order ID</th><th>Customer</th><th>Product</th><th>Quantity</th><th>Status</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <div id="addProductModal" class="modal-overlay">
+                    <div class="modal">
+                        <button class="close-btn" onclick="hideAddProductModal()">×</button>
+                        <h3>Add New Product</h3>
+                        <form id="addProductForm">
+                            <label for="addProductName">Product Name</label>
+                            <input type="text" id="addProductName" required />
+                            <label for="addProductDesc">Description</label>
+                            <textarea id="addProductDesc"></textarea>
+                            <label for="addProductPrice">Price</label>
+                            <input type="number" id="addProductPrice" step="0.01" required />
+                            <label for="addProductStock">Stock</label>
+                            <input type="number" id="addProductStock" required />
+                            <label for="addProductImageUrl">Image URL (Optional)</label>
+                            <input type="url" id="addProductImageUrl" placeholder="https://example.com/image.jpg" />
+                            <button type="submit">Add Product</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="editProductModal" class="modal-overlay">
+                    <div class="modal">
+                        <button class="close-btn" onclick="hideEditProductModal()">×</button>
+                        <h3>Edit Product</h3>
+                        <form id="editProductForm">
+                            <input type="hidden" id="editProductId" />
+                            <label for="editProductName">Product Name</label>
+                            <input type="text" id="editProductName" required />
+                            <label for="editProductDesc">Description</label>
+                            <textarea id="editProductDesc"></textarea>
+                            <label for="editProductPrice">Price</label>
+                            <input type="number" id="editProductPrice" step="0.01" required />
+                            <label for="editProductStock">Stock</label>
+                            <input type="number" id="editProductStock" required />
+                            <label for="editProductImageUrl">Image URL (Optional)</label>
+                            <input type="url" id="editProductImageUrl" placeholder="https://example.com/image.jpg" />
+                            <button type="submit">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="addCustomerModal" class="modal-overlay">
+                    <div class="modal">
+                        <button class="close-btn" onclick="hideAddCustomerModal()">×</button>
+                        <h3>Add New Customer</h3>
+                        <form id="addCustomerForm">
+                            <label for="addCustomerFirstName">First Name</label>
+                            <input type="text" id="addCustomerFirstName" required />
+                            <label for="addCustomerLastName">Last Name</label>
+                            <input type="text" id="addCustomerLastName" required />
+                            <label for="addCustomerEmail">Email</label>
+                            <input type="email" id="addCustomerEmail" required />
+                            <button type="submit">Add Customer</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="editCustomerModal" class="modal-overlay">
+                    <div class="modal">
+                        <button class="close-btn" onclick="hideEditCustomerModal()">×</button>
+                        <h3>Edit Customer</h3>
+                        <form id="editCustomerForm">
+                            <input type="hidden" id="editCustomerId" />
+                            <label for="editCustomerFirstName">First Name</label>
+                            <input type="text" id="editCustomerFirstName" required />
+                            <label for="editCustomerLastName">Last Name</label>
+                            <input type="text" id="editCustomerLastName" required />
+                            <label for="editCustomerEmail">Email</label>
+                            <input type="email" id="editCustomerEmail" disabled />
+                            <label for="editCustomerStatus">Status</label>
+                            <select id="editCustomerStatus">
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                            <button type="submit">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="editOrderModal" class="modal-overlay">
+                    <div class="modal">
+                        <button class="close-btn" onclick="hideEditOrderModal()">×</button>
+                        <h3>Edit Order Status</h3>
+                        <form id="editOrderForm">
+                            <input type="hidden" id="editOrderId" />
+                            <p>Order ID: <strong id="editOrderDisplayId"></strong></p>
+                            <p>Product: <span id="editOrderDisplayName"></span></p>
+                            <p>Customer: <span id="editOrderDisplayCustomer"></span></p>
+                            <label for="editOrderStatus">Status</label>
+                            <select id="editOrderStatus">
+                                <option value="Pending">Pending</option>
+                                <option value="Shipped">Shipped</option>
+                                <option value="Delivered">Delivered</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+                            <button type="submit">Update Order</button>
+                        </form>
+                    </div>
+                </div>
+
+            </section>
+        </section>
+
+    </div>
+
+    <script>
+        // --- Global State ---
+        let currentCustomer = null;
+        let products = [
+            { id: 1, name: "Laptop", description: "Powerful laptop with 16GB RAM", price: 1200, stock: 10, imageUrl: "https://via.placeholder.com/60?text=Laptop" },
+            { id: 2, name: "Phone", description: "Latest model smartphone with OLED display", price: 800, stock: 5, imageUrl: "https://via.placeholder.com/60?text=Phone" },
+            { id: 3, name: "Headphones", description: "Noise canceling over-ear headphones", price: 150, stock: 20, imageUrl: "https://via.placeholder.com/60?text=Headphones" },
+            { id: 4, name: "Keyboard", description: "Mechanical keyboard with RGB lighting", price: 75, stock: 15, imageUrl: "https://via.placeholder.com/60?text=Keyboard" },
+            { id: 5, name: "Mouse", description: "Ergonomic wireless mouse", price: 30, stock: 30, imageUrl: "https://via.placeholder.com/60?text=Mouse" }
+        ];
+        let orders = [
+            { id: 101, productId: 1, quantity: 1, status: "Shipped", customerId: 1, shippingAddress: "123 Main St", billingAddress: "123 Main St" },
+            { id: 102, productId: 3, quantity: 2, status: "Pending", customerId: 1, shippingAddress: "123 Main St", billingAddress: "123 Main St" }
+        ];
+        let customers = [
+            { id: 1, firstName: "Alice", lastName: "Smith", email: "alice@example.com", status: "active", password: "pass123" },
+            { id: 2, firstName: "Bob", lastName: "Johnson", email: "bob@example.com", status: "active", password: "pass123" }
+        ];
+        let currentAdmin = null;
+        let cart = []; // Shopping cart structure: { productId: id, quantity: num, customerId: id }
+        let isBuyNowCheckout = false; // New flag to distinguish Buy Now checkout
+
+        // --- Helper to get elements safely ---
+        const getEl = (id) => document.getElementById(id);
+
+        // --- Tab Switching ---
+        function switchTab(event) {
+            const tabs = document.querySelectorAll('.tab');
+            const sections = document.querySelectorAll('section[id]');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            const target = event.currentTarget.getAttribute('data-tab');
+            sections.forEach(section => {
+                section.style.display = section.id === target ? 'block' : 'none';
+            });
+            if (target === 'customerPortal') {
+                renderCustomerProducts();
+                if (currentCustomer) {
+                    showCustomerDashboard();
+                } else {
+                    showCustomerAuth('login');
+                }
+            } else if (target === 'adminPortal') {
+                if (currentAdmin) {
+                    showAdminDashboard();
+                } else {
+                    resetAdminView();
+                }
+            }
+        }
+
+        // --- Customer Auth Forms Toggle (Professional Interface) ---
+        function showCustomerAuth(mode) {
+            const loginForm = getEl('customerLoginForm');
+            const registerForm = getEl('customerRegisterForm');
+            const showLoginBtn = getEl('showLoginBtn');
+            const showRegisterBtn = getEl('showRegisterBtn');
+
+            if (mode === 'login') {
+                loginForm.classList.add('active-form');
+                registerForm.classList.remove('active-form');
+                showLoginBtn.classList.add('active-auth');
+                showRegisterBtn.classList.remove('active-auth');
+            } else if (mode === 'register') {
+                registerForm.classList.add('active-form');
+                loginForm.classList.remove('active-form');
+                showRegisterBtn.classList.add('active-auth');
+                showLoginBtn.classList.remove('active-auth');
+            }
+
+            getEl('customerDashboard').style.display = 'none';
+            getEl('checkoutSection').style.display = 'none';
+            getEl('customerAuthForms').style.display = 'block';
+        }
+
+        // --- Event Listeners for Customer Auth Buttons ---
+        getEl('showLoginBtn').addEventListener('click', () => showCustomerAuth('login'));
+        getEl('showRegisterBtn').addEventListener('click', () => showCustomerAuth('register'));
+
+
+        // --- Customer Portal Functions ---
+        getEl('customerLoginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = getEl('custLoginEmail').value;
+            const password = getEl('custLoginPassword').value;
+            const customer = customers.find(c => c.email === email && c.password === password);
+            if (customer) {
+                currentCustomer = customer;
+                cart = cart.filter(item => item.customerId === currentCustomer.id); // Load existing cart items for this customer, or keep empty if none.
+                showCustomerDashboard();
+            } else {
+                alert('Invalid email or password.');
+            }
+        });
+
+        getEl('customerRegisterForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const firstName = getEl('custRegFirstName').value;
+            const lastName = getEl('custRegLastName').value;
+            const email = getEl('custRegEmail').value;
+            const password = getEl('custRegPassword').value;
+
+            if (customers.some(c => c.email === email)) {
+                alert('Account with this email already exists.');
+                return;
+            }
+
+            const newCustomer = {
+                id: customers.length ? Math.max(...customers.map(c => c.id)) + 1 : 1,
+                firstName,
+                lastName,
+                email,
+                password,
+                status: 'active'
+            };
+            customers.push(newCustomer);
+            currentCustomer = newCustomer;
+            cart = []; // New customer, empty cart
+            alert('Registration successful! You are now logged in.');
+            showCustomerDashboard();
+        });
+
+        function logoutCustomer() {
+            currentCustomer = null;
+            cart = []; // Clear cart on logout
+            showCustomerAuth('login');
+            getEl('impersonationBanner').style.display = 'none'; // Hide banner if logged out
+        }
+
+        function showCustomerDashboard() {
+            getEl('customerAuthForms').style.display = 'none';
+            getEl('checkoutSection').style.display = 'none';
+            getEl('customerDashboard').style.display = 'block';
+            getEl('custWelcomeName').textContent = currentCustomer.firstName;
+            renderCustomerProducts();
+            renderCustomerCart();
+            renderCustomerOrders();
+            populateCustomerProfile();
+        }
+
+        function populateCustomerProfile() {
+            if (currentCustomer) {
+                getEl('profileFirstName').value = currentCustomer.firstName;
+                getEl('profileLastName').value = currentCustomer.lastName;
+                getEl('profileEmail').value = currentCustomer.email;
+            }
+        }
+
+        getEl('custProfileForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (currentCustomer) {
+                currentCustomer.firstName = getEl('profileFirstName').value;
+                currentCustomer.lastName = getEl('profileLastName').value;
+                // Email is disabled, so no change
+                alert('Profile updated successfully!');
+                getEl('custWelcomeName').textContent = currentCustomer.firstName; // Update welcome message
+            }
+        });
+
+        function renderCustomerProducts() {
+            const tableBody = getEl('custProductsTable').querySelector('tbody');
+            tableBody.innerHTML = '';
+            let filteredProducts = products;
+
+            // Search
+            const searchTerm = getEl('custProductSearch').value.toLowerCase();
+            if (searchTerm) {
+                filteredProducts = filteredProducts.filter(p =>
+                    p.name.toLowerCase().includes(searchTerm) ||
+                    p.description.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            // Sort
+            const sortValue = getEl('custProductSort').value;
+            filteredProducts.sort((a, b) => {
+                if (sortValue === 'name-asc') return a.name.localeCompare(b.name);
+                if (sortValue === 'name-desc') return b.name.localeCompare(a.name);
+                if (sortValue === 'price-asc') return a.price - b.price;
+                if (sortValue === 'price-desc') return b.price - a.price;
+                if (sortValue === 'stock-asc') return a.stock - b.stock;
+                if (sortValue === 'stock-desc') return b.stock - a.stock;
+                return 0;
+            });
+
+            filteredProducts.forEach(product => {
+                const row = tableBody.insertRow();
+                row.innerHTML = `
+                    <td><img src="${product.imageUrl}" alt="${product.name}" class="product-image-thumbnail"></td>
+                    <td>${product.name}</td>
+                    <td>${product.description}</td>
+                    <td>$${product.price.toFixed(2)}</td>
+                    <td>${product.stock}</td>
+                    <td class="actions">
+                        <button onclick="addToCart(${product.id})">Add to Cart</button>
+                        <button onclick="buyNow(${product.id})">Buy Now</button>
+                    </td>
+                `;
+            });
+        }
+
+        getEl('custProductSearch').addEventListener('input', renderCustomerProducts);
+        getEl('custProductSort').addEventListener('change', renderCustomerProducts);
+
+        function addToCart(productId) {
+            if (!currentCustomer) {
+                alert('Please log in to add items to your cart.');
+                return;
+            }
+            const product = products.find(p => p.id === productId);
+            if (product && product.stock > 0) {
+                const existingCartItem = cart.find(item => item.productId === productId && item.customerId === currentCustomer.id);
+                if (existingCartItem) {
+                    existingCartItem.quantity++;
+                } else {
+                    cart.push({ productId: productId, quantity: 1, customerId: currentCustomer.id });
+                }
+                product.stock--; // Decrease stock when added to cart
+                renderCustomerCart();
+                renderCustomerProducts(); // Re-render products to reflect stock change
+            } else if (product && product.stock === 0) {
+                alert('Sorry, this item is out of stock!');
+            }
+        }
+
+        function updateCartQuantity(productId, change) {
+            const cartItem = cart.find(item => item.productId === productId && item.customerId === currentCustomer.id);
+            const product = products.find(p => p.id === productId);
+            if (cartItem && product) {
+                cartItem.quantity += change;
+                product.stock -= change; // Adjust stock accordingly
+
+                if (cartItem.quantity <= 0) {
+                    cart = cart.filter(item => !(item.productId === productId && item.customerId === currentCustomer.id));
+                }
+                renderCustomerCart();
+                renderCustomerProducts(); // Update product list to reflect stock
+            }
+        }
+
+        function removeCartItem(productId) {
+            const cartItem = cart.find(item => item.productId === productId && item.customerId === currentCustomer.id);
+            const product = products.find(p => p.id === productId);
+            if (cartItem && product) {
+                product.stock += cartItem.quantity; // Return stock
+                cart = cart.filter(item => !(item.productId === productId && item.customerId === currentCustomer.id));
+                renderCustomerCart();
+                renderCustomerProducts(); // Update product list to reflect stock
+            }
+        }
+
+        function renderCustomerCart() {
+            const tableBody = getEl('customerCartTable').querySelector('tbody');
+            tableBody.innerHTML = '';
+            let total = 0;
+            const customerCartItems = cart.filter(item => item.customerId === currentCustomer.id);
+
+            if (customerCartItems.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Your cart is empty. Start shopping!</td></tr>';
+                getEl('proceedToCheckoutBtn').style.display = 'none';
+                getEl('cartTotalAmount').textContent = '$0.00';
+                return;
+            }
+
+            customerCartItems.forEach(item => {
+                const product = products.find(p => p.id === item.productId);
+                if (product) {
+                    const subtotal = product.price * item.quantity;
+                    total += subtotal;
+                    const row = tableBody.insertRow();
+                    row.innerHTML = `
+                        <td><img src="${product.imageUrl}" alt="${product.name}" class="product-image-thumbnail"></td>
+                        <td>${product.name}</td>
+                        <td>
+                            <button onclick="updateCartQuantity(${product.id}, -1)" ${item.quantity <= 1 ? 'disabled' : ''} style="padding: 0.2rem 0.5rem; border-radius: 5px;">-</button>
+                            ${item.quantity}
+                            <button onclick="updateCartQuantity(${product.id}, 1)" ${product.stock <= 0 ? 'disabled' : ''} style="padding: 0.2rem 0.5rem; border-radius: 5px;">+</button>
+                        </td>
+                        <td>$${product.price.toFixed(2)}</td>
+                        <td>$${subtotal.toFixed(2)}</td>
+                        <td class="actions"><button onclick="removeCartItem(${product.id})">Remove</button></td>
+                    `;
+                }
+            });
+            getEl('cartTotalAmount').textContent = `$${total.toFixed(2)}`;
+            getEl('proceedToCheckoutBtn').style.display = 'block';
+        }
+
+        function buyNow(productId) {
+            if (!currentCustomer) {
+                alert('Please log in to purchase items.');
+                return;
+            }
+            const product = products.find(p => p.id === productId);
+            if (product && product.stock > 0) {
+                // Temporarily create a cart for this single item for checkout
+                cart = [{ productId: productId, quantity: 1, customerId: currentCustomer.id }];
+                product.stock--; // Decrease stock immediately for "Buy Now"
+                isBuyNowCheckout = true;
+                showCheckout();
+            } else if (product && product.stock === 0) {
+                alert('Sorry, this item is out of stock!');
+            }
+        }
+
+        getEl('proceedToCheckoutBtn').addEventListener('click', () => {
+            isBuyNowCheckout = false; // Reset for regular cart checkout
+            showCheckout();
+        });
+
+        function showCheckout() {
+            if (!currentCustomer || cart.filter(item => item.customerId === currentCustomer.id).length === 0) {
+                alert('Your cart is empty. Add items before checking out.');
+                return;
+            }
+
+            getEl('customerDashboard').style.display = 'none';
+            getEl('checkoutSection').style.display = 'block';
+
+            let checkoutSummaryHtml = '<h4>Order Summary:</h4>';
+            let total = 0;
+            cart.filter(item => item.customerId === currentCustomer.id).forEach(item => {
+                const product = products.find(p => p.id === item.productId);
+                if (product) {
+                    const subtotal = product.price * item.quantity;
+                    total += subtotal;
+                    checkoutSummaryHtml += `<p>${product.name} x ${item.quantity} = $${subtotal.toFixed(2)}</p>`;
+                }
+            });
+            getEl('checkoutSummary').innerHTML = checkoutSummaryHtml;
+            getEl('checkoutTotalAmount').textContent = `$${total.toFixed(2)}`;
+
+            // Pre-fill shipping/billing with dummy data or last used
+            getEl('shippingAddress').value = "123 Main Street, Anytown, USA";
+            getEl('billingAddress').value = "123 Main Street, Anytown, USA";
+        }
+
+        function cancelCheckout() {
+            if (isBuyNowCheckout) {
+                // If it was a "Buy Now" checkout, return the stock and clear the temporary cart
+                const item = cart[0];
+                if (item) {
+                    const product = products.find(p => p.id === item.productId);
+                    if (product) {
+                        product.stock += item.quantity;
+                    }
+                }
+                cart = []; // Clear the temporary cart
+            }
+            isBuyNowCheckout = false;
+            getEl('checkoutSection').style.display = 'none';
+            showCustomerDashboard(); // Go back to the dashboard
+        }
+
+
+        getEl('checkoutForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (!currentCustomer) {
+                alert('Please log in to place an order.');
+                return;
+            }
+
+            const shippingAddress = getEl('shippingAddress').value;
+            const billingAddress = getEl('billingAddress').value;
+
+            // Process each item in the current customer's cart
+            const itemsToOrder = cart.filter(item => item.customerId === currentCustomer.id);
+            if (itemsToOrder.length === 0) {
+                alert('Your cart is empty. Nothing to checkout.');
+                return;
+            }
+
+            itemsToOrder.forEach(item => {
+                const product = products.find(p => p.id === item.productId);
+                if (product) {
+                    // Create a new order
+                    const newOrder = {
+                        id: orders.length ? Math.max(...orders.map(o => o.id)) + 1 : 101,
+                        productId: product.id,
+                        quantity: item.quantity,
+                        status: "Pending",
+                        customerId: currentCustomer.id,
+                        shippingAddress: shippingAddress,
+                        billingAddress: billingAddress,
+                        orderDate: new Date().toISOString().split('T')[0] // YYYY-MM-DD
+                    };
+                    orders.push(newOrder);
+                }
+            });
+
+            // Clear the cart for the current customer after successful order
+            cart = cart.filter(item => item.customerId !== currentCustomer.id);
+            isBuyNowCheckout = false; // Reset flag
+
+            alert('Order placed successfully!');
+            getEl('checkoutSection').style.display = 'none';
+            showCustomerDashboard(); // Go back to dashboard to see new orders
+        });
+
+
+        function renderCustomerOrders() {
+            const tableBody = getEl('custOrdersTable').querySelector('tbody');
+            tableBody.innerHTML = '';
+            const customerOrders = orders.filter(order => order.customerId === currentCustomer.id);
+
+            if (customerOrders.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">You have no orders yet.</td></tr>';
+                return;
+            }
+
+            customerOrders.forEach(order => {
+                const product = products.find(p => p.id === order.productId);
+                if (product) {
+                    const row = tableBody.insertRow();
+                    row.innerHTML = `
+                        <td>${order.id}</td>
+                        <td>${product.name}</td>
+                        <td>${order.quantity}</td>
+                        <td>${order.status}</td>
+                        <td class="actions">
+                            ${order.status === 'Pending' ? `<button onclick="cancelOrder(${order.id})">Cancel</button>` : ''}
+                        </td>
+                    `;
+                }
+            });
+        }
+
+        function cancelOrder(orderId) {
+            if (confirm('Are you sure you want to cancel this order?')) {
+                const orderIndex = orders.findIndex(o => o.id === orderId && o.customerId === currentCustomer.id);
+                if (orderIndex !== -1) {
+                    const order = orders[orderIndex];
+                    if (order.status === 'Pending') {
+                        const product = products.find(p => p.id === order.productId);
+                        if (product) {
+                            product.stock += order.quantity; // Return stock
+                        }
+                        order.status = 'Cancelled'; // Update status to cancelled
+                        alert(`Order ${orderId} has been cancelled.`);
+                        renderCustomerOrders();
+                        renderCustomerProducts(); // Update product list to reflect stock change
+                    } else {
+                        alert('Only pending orders can be cancelled.');
+                    }
+                }
+            }
+        }
+
+
+        // --- Admin Portal Functions ---
+        getEl('adminLoginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = getEl('adminLoginEmail').value;
+            const password = getEl('adminLoginPassword').value;
+            if (email === 'admin@example.com' && password === 'admin123') { // Simple admin login
+                currentAdmin = { email: email, name: "Admin User" };
+                showAdminDashboard();
+            } else {
+                alert('Invalid admin credentials.');
+            }
+        });
+
+        function logoutAdmin() {
+            currentAdmin = null;
+            resetAdminView();
+        }
+
+        function resetAdminView() {
+            getEl('adminAuthForms').style.display = 'block';
+            getEl('adminDashboard').style.display = 'none';
+        }
+
+        function showAdminDashboard() {
+            getEl('adminAuthForms').style.display = 'none';
+            getEl('adminDashboard').style.display = 'block';
+            updateAdminStats();
+            renderAdminProducts();
+            renderAdminCustomers();
+            renderAdminOrders();
+        }
+
+        function updateAdminStats() {
+            const totalProducts = products.length;
+            const totalCustomers = customers.length;
+            const totalOrders = orders.length;
+            const pendingOrders = orders.filter(o => o.status === 'Pending').length;
+            const shippedOrders = orders.filter(o => o.status === 'Shipped').length;
+            const deliveredOrders = orders.filter(o => o.status === 'Delivered').length;
+
+            getEl('adminStats').innerHTML = `
+                <h3>Portal Statistics</h3>
+                <p><strong>Total Products:</strong> ${totalProducts}</p>
+                <p><strong>Total Customers:</strong> ${totalCustomers}</p>
+                <p><strong>Total Orders:</strong> ${totalOrders}</p>
+                <p><strong>Pending Orders:</strong> ${pendingOrders}</p>
+                <p><strong>Shipped Orders:</strong> ${shippedOrders}</p>
+                <p><strong>Delivered Orders:</strong> ${deliveredOrders}</p>
+            `;
+        }
+
+
+        // --- Admin Product Management ---
+        function renderAdminProducts() {
+            const tableBody = getEl('adminProductsTable').querySelector('tbody');
+            tableBody.innerHTML = '';
+            let filteredProducts = products;
+
+            // Search
+            const searchTerm = getEl('adminProductSearch').value.toLowerCase();
+            if (searchTerm) {
+                filteredProducts = filteredProducts.filter(p =>
+                    p.name.toLowerCase().includes(searchTerm) ||
+                    p.description.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            // Sort
+            const sortValue = getEl('adminProductSort').value;
+            filteredProducts.sort((a, b) => {
+                if (sortValue === 'name-asc') return a.name.localeCompare(b.name);
+                if (sortValue === 'name-desc') return b.name.localeCompare(a.name);
+                if (sortValue === 'price-asc') return a.price - b.price;
+                if (sortValue === 'price-desc') return b.price - a.price;
+                if (sortValue === 'stock-asc') return a.stock - b.stock;
+                if (sortValue === 'stock-desc') return b.stock - a.stock;
+                return 0;
+            });
+
+            filteredProducts.forEach(product => {
+                const row = tableBody.insertRow();
+                row.innerHTML = `
+                    <td><img src="${product.imageUrl}" alt="${product.name}" class="product-image-thumbnail"></td>
+                    <td>${product.name}</td>
+                    <td>$${product.price.toFixed(2)}</td>
+                    <td>${product.stock}</td>
+                    <td class="actions">
+                        <button onclick="showEditProductModal(${product.id})">Edit</button>
+                        <button onclick="deleteProduct(${product.id})">Delete</button>
+                    </td>
+                `;
+            });
+        }
+
+        getEl('adminProductSearch').addEventListener('input', renderAdminProducts);
+        getEl('adminProductSort').addEventListener('change', renderAdminProducts);
+
+        function showAddProductModal() {
+            getEl('addProductForm').reset();
+            getEl('addProductModal').classList.add('active');
+        }
+
+        function hideAddProductModal() {
+            getEl('addProductModal').classList.remove('active');
+        }
+
+        getEl('addProductForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = getEl('addProductName').value;
+            const description = getEl('addProductDesc').value;
+            const price = parseFloat(getEl('addProductPrice').value);
+            const stock = parseInt(getEl('addProductStock').value);
+            const imageUrl = getEl('addProductImageUrl').value || "https://via.placeholder.com/60?text=Product"; // Default image
+
+            const newProduct = {
+                id: products.length ? Math.max(...products.map(p => p.id)) + 1 : 1,
+                name,
+                description,
+                price,
+                stock,
+                imageUrl
+            };
+            products.push(newProduct);
+            hideAddProductModal();
+            renderAdminProducts();
+            renderCustomerProducts(); // Update customer view as well
+            updateAdminStats();
+            alert('Product added successfully!');
+        });
+
+        function showEditProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                getEl('editProductId').value = product.id;
+                getEl('editProductName').value = product.name;
+                getEl('editProductDesc').value = product.description;
+                getEl('editProductPrice').value = product.price;
+                getEl('editProductStock').value = product.stock;
+                getEl('editProductImageUrl').value = product.imageUrl;
+                getEl('editProductModal').classList.add('active');
+            }
+        }
+
+        function hideEditProductModal() {
+            getEl('editProductModal').classList.remove('active');
+        }
+
+        getEl('editProductForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = parseInt(getEl('editProductId').value);
+            const productIndex = products.findIndex(p => p.id === id);
+
+            if (productIndex !== -1) {
+                products[productIndex].name = getEl('editProductName').value;
+                products[productIndex].description = getEl('editProductDesc').value;
+                products[productIndex].price = parseFloat(getEl('editProductPrice').value);
+                products[productIndex].stock = parseInt(getEl('editProductStock').value);
+                products[productIndex].imageUrl = getEl('editProductImageUrl').value || "https://via.placeholder.com/60?text=Product";
+                hideEditProductModal();
+                renderAdminProducts();
+                renderCustomerProducts(); // Update customer view
+                alert('Product updated successfully!');
+            }
+        });
+
+        function deleteProduct(productId) {
+            if (confirm('Are you sure you want to delete this product? This action cannot be undone.')) {
+                products = products.filter(p => p.id !== productId);
+                // Also remove any cart items or orders associated with this product
+                cart = cart.filter(item => item.productId !== productId);
+                orders = orders.filter(order => order.productId !== productId);
+                renderAdminProducts();
+                renderCustomerProducts(); // Update customer view
+                renderCustomerCart(); // Update customer cart
+                renderAdminOrders(); // Update admin orders
+                updateAdminStats();
+                alert('Product deleted successfully!');
+            }
+        }
+
+        // --- Admin Customer Management ---
+        function renderAdminCustomers() {
+            const tableBody = getEl('adminCustomersTable').querySelector('tbody');
+            tableBody.innerHTML = '';
+            let filteredCustomers = customers;
+
+            // Search
+            const searchTerm = getEl('adminCustomerSearch').value.toLowerCase();
+            if (searchTerm) {
+                filteredCustomers = filteredCustomers.filter(c =>
+                    c.firstName.toLowerCase().includes(searchTerm) ||
+                    c.lastName.toLowerCase().includes(searchTerm) ||
+                    c.email.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            // Filter by status
+            const statusFilter = getEl('adminCustomerStatusFilter').value;
+            if (statusFilter !== 'all') {
+                filteredCustomers = filteredCustomers.filter(c => c.status === statusFilter);
+            }
+
+            filteredCustomers.forEach(customer => {
+                const row = tableBody.insertRow();
+                row.innerHTML = `
+                    <td>${customer.firstName} ${customer.lastName}</td>
+                    <td>${customer.email}</td>
+                    <td>${customer.status}</td>
+                    <td class="actions">
+                        <button onclick="showEditCustomerModal(${customer.id})">Edit</button>
+                        <button onclick="impersonateCustomer(${customer.id})">Impersonate</button>
+                    </td>
+                `;
+            });
+        }
+
+        getEl('adminCustomerSearch').addEventListener('input', renderAdminCustomers);
+        getEl('adminCustomerStatusFilter').addEventListener('change', renderAdminCustomers);
+
+
+        function showAddCustomerModal() {
+            getEl('addCustomerForm').reset();
+            getEl('addCustomerModal').classList.add('active');
+        }
+
+        function hideAddCustomerModal() {
+            getEl('addCustomerModal').classList.remove('active');
+        }
+
+        getEl('addCustomerForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const firstName = getEl('addCustomerFirstName').value;
+            const lastName = getEl('addCustomerLastName').value;
+            const email = getEl('addCustomerEmail').value;
+            const password = "password123"; // Default password for admin-added customers
+
+            if (customers.some(c => c.email === email)) {
+                alert('Customer with this email already exists.');
+                return;
+            }
+
+            const newCustomer = {
+                id: customers.length ? Math.max(...customers.map(c => c.id)) + 1 : 1,
+                firstName,
+                lastName,
+                email,
+                password,
+                status: 'active'
+            };
+            customers.push(newCustomer);
+            hideAddCustomerModal();
+            renderAdminCustomers();
+            updateAdminStats();
+            alert('Customer added successfully!');
+        });
+
+        function showEditCustomerModal(customerId) {
+            const customer = customers.find(c => c.id === customerId);
+            if (customer) {
+                getEl('editCustomerId').value = customer.id;
+                getEl('editCustomerFirstName').value = customer.firstName;
+                getEl('editCustomerLastName').value = customer.lastName;
+                getEl('editCustomerEmail').value = customer.email;
+                getEl('editCustomerStatus').value = customer.status;
+                getEl('editCustomerModal').classList.add('active');
+            }
+        }
+
+        function hideEditCustomerModal() {
+            getEl('editCustomerModal').classList.remove('active');
+        }
+
+        getEl('editCustomerForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = parseInt(getEl('editCustomerId').value);
+            const customerIndex = customers.findIndex(c => c.id === id);
+
+            if (customerIndex !== -1) {
+                customers[customerIndex].firstName = getEl('editCustomerFirstName').value;
+                customers[customerIndex].lastName = getEl('editCustomerLastName').value;
+                customers[customerIndex].status = getEl('editCustomerStatus').value;
+                hideEditCustomerModal();
+                renderAdminCustomers();
+                // If the currently impersonated customer is edited, update their name in the banner
+                if (currentCustomer && currentCustomer.id === id) {
+                    getEl('impersonatedName').textContent = `${customers[customerIndex].firstName} ${customers[customerIndex].lastName}`;
+                    getEl('custWelcomeName').textContent = customers[customerIndex].firstName;
+                    populateCustomerProfile(); // Update profile fields if it's the current customer
+                }
+                alert('Customer updated successfully!');
+            }
+        });
+
+        function impersonateCustomer(customerId) {
+            const customer = customers.find(c => c.id === customerId);
+            if (customer) {
+                currentCustomer = customer;
+                cart = cart.filter(item => item.customerId === currentCustomer.id); // Load cart for this customer
+                getEl('impersonatedName').textContent = `${customer.firstName} ${customer.lastName}`;
+                getEl('impersonationBanner').style.display = 'block';
+
+                // Switch to customer portal and show dashboard
+                document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+                getEl('customerPortal').style.display = 'block';
+                getEl('adminPortal').style.display = 'none';
+                document.querySelector('.tab[data-tab="customerPortal"]').classList.add('active');
+                showCustomerDashboard();
+                alert(`Now impersonating ${customer.firstName} ${customer.lastName}.`);
+            }
+        }
+
+        function stopImpersonation() {
+            currentCustomer = null;
+            cart = []; // Clear impersonated cart
+            getEl('impersonationBanner').style.display = 'none';
+            // Switch back to admin portal if admin was logged in, or customer login if not
+            if (currentAdmin) {
+                switchTab({ currentTarget: document.querySelector('.tab[data-tab="adminPortal"]') });
+            } else {
+                switchTab({ currentTarget: document.querySelector('.tab[data-tab="customerPortal"]') });
+                showCustomerAuth('login');
+            }
+            alert('Impersonation ended.');
+        }
+
+
+        // --- Admin Order Management ---
+        function renderAdminOrders() {
+            const tableBody = getEl('adminOrdersTable').querySelector('tbody');
+            tableBody.innerHTML = '';
+            let filteredOrders = orders;
+
+            const statusFilter = getEl('adminOrderStatusFilter').value;
+            if (statusFilter !== 'all') {
+                filteredOrders = filteredOrders.filter(order => order.status === statusFilter);
+            }
+
+            filteredOrders.forEach(order => {
+                const product = products.find(p => p.id === order.productId);
+                const customer = customers.find(c => c.id === order.customerId);
+                if (product && customer) {
+                    const row = tableBody.insertRow();
+                    row.innerHTML = `
+                        <td>${order.id}</td>
+                        <td>${customer.firstName} ${customer.lastName}</td>
+                        <td>${product.name}</td>
+                        <td>${order.quantity}</td>
+                        <td>${order.status}</td>
+                        <td class="actions">
+                            <button onclick="showEditOrderModal(${order.id})">Edit Status</button>
+                        </td>
+                    `;
+                }
+            });
+        }
+
+        getEl('adminOrderStatusFilter').addEventListener('change', renderAdminOrders);
+
+        function showEditOrderModal(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                const product = products.find(p => p.id === order.productId);
+                const customer = customers.find(c => c.id === order.customerId);
+
+                getEl('editOrderId').value = order.id;
+                getEl('editOrderDisplayId').textContent = order.id;
+                getEl('editOrderDisplayName').textContent = product ? product.name : 'N/A';
+                getEl('editOrderDisplayCustomer').textContent = customer ? `${customer.firstName} ${customer.lastName}` : 'N/A';
+                getEl('editOrderStatus').value = order.status;
+                getEl('editOrderModal').classList.add('active');
+            }
+        }
+
+        function hideEditOrderModal() {
+            getEl('editOrderModal').classList.remove('active');
+        }
+
+        getEl('editOrderForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = parseInt(getEl('editOrderId').value);
+            const newStatus = getEl('editOrderStatus').value;
+            const orderIndex = orders.findIndex(o => o.id === id);
+
+            if (orderIndex !== -1) {
+                const oldStatus = orders[orderIndex].status;
+                orders[orderIndex].status = newStatus;
+
+                // If an order is cancelled, return the product to stock
+                if (oldStatus !== 'Cancelled' && newStatus === 'Cancelled') {
+                    const product = products.find(p => p.id === orders[orderIndex].productId);
+                    if (product) {
+                        product.stock += orders[orderIndex].quantity;
+                        renderCustomerProducts(); // Update customer product list
+                    }
+                }
+                // If an order was cancelled and is now changed to something else, subtract from stock again (unlikely but good for consistency)
+                else if (oldStatus === 'Cancelled' && newStatus !== 'Cancelled') {
+                     const product = products.find(p => p.id === orders[orderIndex].productId);
+                    if (product) {
+                        product.stock -= orders[orderIndex].quantity;
+                        renderCustomerProducts(); // Update customer product list
+                    }
+                }
+
+
+                hideEditOrderModal();
+                renderAdminOrders();
+                renderCustomerOrders(); // Update customer view if they are logged in
+                updateAdminStats();
+                alert(`Order ${id} status updated to ${newStatus}.`);
+            }
+        });
+
+
+        // --- Initial Render on Load ---
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', switchTab);
+            });
+            // Initial view is customer portal login
+            switchTab({ currentTarget: document.querySelector('.tab[data-tab="customerPortal"]') });
+            showCustomerAuth('login'); // Ensure login form is shown by default
+            renderCustomerProducts(); // Render products even if not logged in
+        });
+    </script>
+</body>
+</html>
+

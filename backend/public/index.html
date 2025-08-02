@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>E-Commerce Portal Demo</title>
+  <style>
+    /* Neon Glow Colors & fonts */
+    :root {
+      --primary: #00fff7;       /* Neon Cyan */
+      --primary-glow: rgba(0, 255, 247, 0.6);
+      --secondary: #ff00d4;     /* Neon Magenta */
+      --secondary-glow: rgba(255, 0, 212, 0.6);
+      --background: #0d1117;    /* Dark Navy */
+      --text-main: #aaffff;     /* Light Cyan */
+      --input-bg: #111a23;
+      --input-border: #00fff7;
+      --button-bg: var(--primary);
+      --button-hover: var(--secondary);
+      --table-header-bg: var(--primary);
+      --table-row-bg1: #111a23;
+      --table-row-bg2: #17212b;
+      --shadow-light: rgba(0, 255, 247, 0.4);
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--background);
+      color: var(--text-main);
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem;
+      user-select: none;
+    }
+    h1, h2, h3 {
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      text-shadow: 0 0 10px var(--primary-glow);
+    }
+    h1 {
+      font-size: 2rem;
+      margin-top: 0;
+    }
+    h2 {
+      font-size: 1.3rem;
+      margin-top: 2rem;
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 0.3rem;
+      text-shadow: 0 0 10px var(--primary-glow);
+    }
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      background: #141c27;
+      border-radius: 16px;
+      padding: 1rem 2rem 2rem;
+      box-shadow:
+        0 0 10px var(--primary-glow),
+        0 0 30px var(--primary-glow);
+    }
+    /* Tabs */
+    .tabs {
+      display: flex;
+      border-bottom: 3px solid var(--primary);
+      margin-bottom: 1rem;
+      user-select: none;
+    }
+    .tab {
+      padding: 1rem 2rem;
+      cursor: pointer;
+      color: var(--primary);
+      font-weight: 700;
+      border-bottom: 3px solid transparent;
+      transition: border-color 0.3s ease, color 0.3s ease;
+      text-shadow: 0 0 6px var(--primary-glow);
+    }
+    .tab.active {
+      border-color: var(--secondary);
+      color: var(--secondary);
+      text-shadow:
+        0 0 8px var(--secondary-glow),
+        0 0 15px var(--secondary-glow);
+    }
+    /* Forms */
+    form {
+      max-width: 400px;
+      background: var(--input-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow:
+        0 0 15px var(--primary-glow);
+      margin-bottom: 2rem;
+      color: var(--text-main);
+    }
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+      text-shadow: 0 0 6px var(--primary-glow);
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 2px solid var(--input-border);
+      border-radius: 10px;
+      background: #111a23;
+      color: var(--text-main);
+      margin-bottom: 1.2rem;
+      font-size: 1rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      resize: vertical;
+      text-shadow: none;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--secondary);
+      outline: none;
+      box-shadow:
+        0 0 8px var(--secondary-glow),
+        inset 0 0 5px var(--secondary-glow);
+      background: #1b2736;
+      color: var(--text-main);
+    }
+    button {
+      background: var(--button-bg);
+      color: white;
+      font-weight: 700;
+      padding: 0.9rem 2.5rem;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 0 10px var(--primary-glow);
+      text-shadow:
+        0 0 5px #000;
+      user-select: none;
+    }
+    button:hover {
+      background: var(--button-hover);
+      box-shadow:
+        0 0 20px var(--secondary-glow),
+        0 0 30px var(--secondary-glow);
+    }
+    /* Layout */
+    .flex-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .flex-grow {
+      flex-grow: 1;
+    }
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 12px;
+      margin-bottom: 2rem;
+      table-layout: fixed;
+      word-wrap: break-word;
+      color: var(--text-main);
+      text-shadow: none;
+    }
+    th, td {
+      padding: 1rem 1.4rem;
+      background: var(--table-row-bg1);
+      border-radius: 10px;
+      text-align: left;
+      box-shadow:
+        0 0 8px var(--primary-glow);
+      vertical-align: middle;
+      color: var(--text-main);
+    }
+    th {
+      background: var(--table-header-bg);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      user-select: none;
+      text-shadow:
+        0 0 12px var(--primary-glow);
+    }
+    tbody tr:nth-child(even) td {
+      background: var(--table-row-bg2);
+      box-shadow:
+        0 0 8px var(--secondary-glow);
+    }
+    tbody tr:hover td {
+      background: #1b2736;
+      box-shadow:
+        0 0 20px var(--secondary-glow);
+      color: var(--primary);
+    }
+    /* Action buttons */
+    .actions button {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      padding: 0.3rem 0.9rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      margin-right: 0.5rem;
+      transition: all 0.3s ease;
+      text-shadow:
+        0 0 8px var(--primary-glow);
+      box-shadow: none;
+      user-select: none;
+    }
+    .actions button:hover {
+      background: var(--secondary);
+      color: white;
+      box-shadow:
+        0 0 15px var(--secondary-glow);
+      text-shadow:
+        0 0 15px #fff;
+    }
+    /* Search and filters */
+    .search-bar,
+    .filter-bar {
+      margin-bottom: 1rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .search-bar input,
+    .filter-bar select {
+      flex-grow: 1;
+      max-width: 250px;
+      background: var(--input-bg);
+      border: 2px solid var(--input-border);
+      border-radius: 12px;
+      padding: 0.6rem 1rem;
+      color: var(--text-main);
+      font-weight: 600;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      text-shadow: none;
+    }
+    .search-bar input:focus,
+    .filter-bar select:focus {
+      border-color: var(--secondary);
+      box-shadow:
+        0 0 8px var(--secondary-glow),
+        inset 0 0 5px var(--secondary-glow);
+      outline: none;
+      background: #1b2736;
+      color: var(--text-main);
+    }
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+    .pagination button {
+      background: var(--input-bg);
+      color: var(--text-main);
+      border: 2px solid var(--primary);
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease, color 0.3s ease;
+      text-shadow: none;
+      user-select: none;
+    }
+    .pagination button.active,
+    .pagination button:hover {
+      background: var(--secondary);
+      color: white;
+      box-shadow:
+        0 0 20px var(--secondary-glow);
+      text-shadow:
+        0 0 10px #fff;
+    }
+    /* Modals (simple inline) */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right:0; bottom:0;
+      background: rgba(0,0,0,0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      user-select: none;
+    }
+    .modal-overlay.active {
+      visibility: visible;
+      opacity: 1;
+    }
+    .modal {
+      background: var(--input-bg);
+      border-radius: 15px;
+      padding: 2rem;
+      width: 400px;
+      max-width: 90vw;
+      box-shadow:
+        0 0 20px var(--secondary-glow);
+      position: relative;
+      color: var(--text-main);
+      user-select: text;
+    }
+    .modal h3 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      text-shadow: 0 0 10px var(--primary-glow);
+    }
+    .modal .close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--primary);
+      cursor: pointer;
+      font-weight: 700;
+      text-shadow: 0 0 12px var(--primary-glow);
+      user-select: none;
+    }
+    /* Impersonation banner */
+    .impersonation-banner {
+      background: var(--secondary);
+      color: white;
+      text-align: center;
+      padding: 0.6rem 0;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border-radius: 0 0 12px 12px;
+      margin-bottom: 1rem;
+      user-select: none;
+      text-shadow:
+        0 0 10px rgba(255, 0, 212, 0.8);
+    }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .flex-row {
+        flex-direction: column;
+      }
+      .search-bar input,
+      .filter-bar select {
+        max-width: 100%;
+      }
+      table, th, td {
+        font-size: 0.9rem;
+      }
+      form {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div id="impersonationBanner" class="impersonation-banner" style="display:none;">
+      You are impersonating customer: <span id="impersonatedName"></span>
+      <button style="margin-left:1rem;padding:0.2rem 0.5rem;border-radius:6px; border:none; cursor:pointer; font-weight:700;" onclick="stopImpersonation()">Exit Impersonation</button>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" data-tab="customerPortal" onclick="switchTab(event)">Customer Portal</div>
+      <div class="tab" data-tab="adminPortal" onclick="switchTab(event)">Admin Portal</div>
+    </div>
+
+    <!-- CUSTOMER PORTAL -->
+    <section id="customerPortal">
+
+      <h1>Customer Portal</h1>
+
+      <!-- Customer Login / Register toggle -->
+      <div style="display:flex; gap:1rem; margin-bottom: 2rem;">
+        <button onclick="showCustomerAuth('login')" style="flex:1; padding:1rem; background:var(--button-bg); color:white; border:none; border-radius:12px; font-weight:700;">Login</button>
+        <button onclick="showCustomerAuth('register')" style="flex:1; padding:1rem; background:var(--input-bg); border: 2px solid var(--button-bg); color: var(--primary); border-radius:12px; font-weight:700;">Register</button>
+      </div>
+
+      <div id="customerAuthForms">
+
+        <form id="customerLoginForm" style="display:block;">
+          <h2>Login</h2>
+          <label for="custLoginEmail">Email</label>
+          <input type="email" id="custLoginEmail" required placeholder="you@example.com" />
+          <label for="custLoginPassword">Password</label>
+          <input type="password" id="custLoginPassword" required placeholder="Your password" />
+          <button type="submit">Login</button>
+        </form>
+
+        <form id="customerRegisterForm" style="display:none;">
+          <h2>Register</h2>
+          <label for="custRegFirstName">First Name</label>
+          <input type="text" id="custRegFirstName" required placeholder="First Name" />
+          <label for="custRegLastName">Last Name</label>
+          <input type="text" id="custRegLastName" required placeholder="Last Name" />
+          <label for="custRegEmail">Email</label>
+          <input type="email" id="custRegEmail" required placeholder="you@example.com" />
+          <label for="custRegPassword">Password</label>
+          <input type="password" id="custRegPassword" required placeholder="Choose a strong password" />
+          <button type="submit">Register</button>
+        </form>
+
+      </div>
+
+      <!-- After login, show Customer Dashboard -->
+      <section id="customerDashboard" style="display:none;">
+
+        <h2>Welcome, <span id="custWelcomeName"></span>!</h2>
+
+        <button onclick="logoutCustomer()" style="margin-bottom: 1rem;">Logout</button>
+
+        <h3>Browse Products</h3>
+        <div class="search-bar">
+          <input type="text" id="custProductSearch" placeholder="Search products..." oninput="filterProducts()" />
+          <select id="custProductSort" onchange="sortProducts()">
+            <option value="name-asc">Sort by Name ↑</option>
+            <option value="name-desc">Sort by Name ↓</option>
+            <option value="price-asc">Sort by Price ↑</option>
+            <option value="price-desc">Sort by Price ↓</option>
+            <option value="stock-asc">Sort by Stock ↑</option>
+            <option value="stock-desc">Sort by Stock ↓</option>
+          </select>
+        </div>
+        <table id="custProductsTable">
+          <thead>
+            <tr><th>Name</th><th>Description</th><th>Price</th><th>Stock</th><th>Actions</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <h3>Your Orders</h3>
+        <table id="custOrdersTable">
+          <thead>
+            <tr><th>Order ID</th><th>Product</th><th>Quantity</th><th>Status</th><th>Actions</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <h3>Profile</h3>
+        <form id="custProfileForm">
+          <label for="profileFirstName">First Name</label>
+          <input type="text" id="profileFirstName" required />
+          <label for="profileLastName">Last Name</label>
+          <input type="text" id="profileLastName" required />
+          <label for="profileEmail">Email</label>
+          <input type="email" id="profileEmail" disabled />
+          <button type="submit">Save Changes</button>
+        </form>
+
+      </section>
+
+      <!-- Checkout Section -->
+      <section id="checkoutSection" style="display:none;">
+        <h2>Checkout</h2>
+        <form id="checkoutForm">
+          <label for="shippingAddress">Shipping Address</label>
+          <textarea id="shippingAddress" required></textarea>
+          <label for="billingAddress">Billing Address</label>
+          <textarea id="billingAddress" required></textarea>
+          <button type="submit">Place Order</button>
+        </form>
+      </section>
+
+</section>
+
+    <!-- ADMIN PORTAL -->
+    <section id="adminPortal" style="display:none;">
+
+      <h1>Admin Portal</h1>
+    <script src="frontend/aiVoiceAssistant.js"></script>
+    <script src="frontend/Script.js"></script>
+
+      <!-- Admin Login -->
+      <div id="adminAuthForms">
+        <form id="adminLoginForm">
+          <h2>Admin Login</h2>
+          <label for="adminLoginEmail">Email</label>
+          <input type="email" id="adminLoginEmail" required placeholder="admin@example.com" />
+          <label for="adminLoginPassword">Password</label>
+          <input type="password" id="adminLoginPassword" required placeholder="Your password" />
+          <button type="submit">Login</button>
+        </form>
+      </div>
+
+      <!-- Admin Dashboard -->
+      <section id="adminDashboard" style="display:none;">
+        <h2>Dashboard</h2>
+        <div id="adminDashboardStats"></div>
+
+        <h3>Products</h3>
+        <div class="search-bar">
+          <input type="text" id="adminProductSearch" placeholder="Search products..." />
+          <select id="adminProductSort">
+            <option value="name-asc">Sort by Name ↑</option>
+            <option value="name-desc">Sort by Name ↓</option>
+            <option value="price-asc">Sort by Price ↑</option>
+            <option value="price-desc">Sort by Price ↓</option>
+            <option value="stock-asc">Sort by Stock ↑</option>
+            <option value="stock-desc">Sort by Stock ↓</option>
+          </select>
+          <button onclick="loadAdminProducts()">Search</button>
+          <button onclick="showAddProductModal()">+ Add New Product</button>
+        </div>
+        <table id="adminProductsTable">
+          <thead>
+            <tr><th>Name</th><th>Price</th><th>Stock</th><th>Actions</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <h3>Customers</h3>
+        <div class="search-bar">
+          <input type="text" id="adminCustomerSearch" placeholder="Search customers..." />
+          <select id="adminCustomerStatusFilter">
+            <option value="all">All</option>
+            <option value="active">Active</option>
+            <option value="blocked">Blocked</option>
+          </select>
+          <button onclick="loadAdminCustomers()">Search</button>
+          <button onclick="showAddCustomerModal()">+ Add New Customer</button>
+        </div>
+        <table id="adminCustomersTable">
+          <thead>
+            <tr><th>Name</th><th>Email</th><th>Status</th><th>Actions</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>

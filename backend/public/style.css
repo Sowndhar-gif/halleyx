@@ -1,0 +1,30 @@
+/* Copy of frontend/style.css content */
+:root {
+  --primary: #00fff7;
+  --primary-glow: rgba(0, 255, 247, 0.6);
+  --secondary: #ff00d4;
+  --secondary-glow: rgba(255, 0, 212, 0.6);
+  --background: #0d1117;
+  --text-main: #aaffff;
+  --input-bg: #111a23;
+  --input-border: #00fff7;
+  --button-bg: var(--primary);
+  --button-hover: var(--secondary);
+  --table-header-bg: var(--primary);
+  --table-row-bg1: #111a23;
+  --table-row-bg2: #17212b;
+  --shadow-light: rgba(0, 255, 247, 0.4);
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--background);
+  color: var(--text-main);
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  user-select: none;
+}
+/* Additional styles as per frontend/style.css */
